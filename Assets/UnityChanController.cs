@@ -13,6 +13,9 @@ public class UnityChanController : MonoBehaviour
     private float dump = 0.8f;
 
     float jumpVelocity = 20;
+
+    private float deadLine = -9;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +32,8 @@ public class UnityChanController : MonoBehaviour
         bool isGround = (transform.position.y > this.groundLevel) ? false : true;
         this.animator.SetBool("isGround", isGround);
 
+        GetComponent<AudioSource>().volume = (isGround) ? 1 : 0;
+
         if (Input.GetMouseButtonDown (0) && isGround)
         {
             this.rigid2D.velocity = new Vector2(0, this.jumpVelocity);
@@ -40,6 +45,12 @@ public class UnityChanController : MonoBehaviour
             {
                 this.rigid2D.velocity *= this.dump;
             }
+        }
+        if (transform.position.x < this.deadLine)
+        {
+            GameObject.Find("Canvas").GetComponent<UIController>().GameOver();
+
+            Destroy(gameObject);
         }
     }
 }
