@@ -30,9 +30,12 @@ public class CubeController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //cube同士が重なったとき、または、groundと接触したとき
         if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Ground"))
         {
             //this.blockSound.Play();
+
+            //cubeprefabにアタッチしているAudioSourceを再生
             GetComponent<AudioSource>().Play();
         }
     }
